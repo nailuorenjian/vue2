@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue2-music</title>
+    <link rel="icon" href="http://s1.music.126.net/style/favicon.ico?v20180823">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            background-image: linear-gradient(to left, rgba(248, 121, 248, 0.623), rgba(216, 160, 6, 0.795));
+        }
+        
+        #app {
+            position: relative;
+            width: 1300px;
+            height: 800px;
+            background-color: aliceblue;
+            margin: 50px auto;
+        }
+        
+        header {
+            width: 100%;
+            height: 60px;
+            background-color: #ec4141;
+        }
+        
+        .app-title {
+            float: left;
+        }
+        
+        .app-title img {
+            height: 60px;
+        }
+        
+        .app-search {
+            display: block;
+            float: right;
+            width: 600px;
+            height: 60px;
+        }
+        
+        .app-search input {
+            outline: none;
+            background-color: #ec4141a6;
+            border: 1px solid #cebdbd7a;
+            width: 380px;
+            line-height: 30px;
+            margin: 15px 140px;
+            font-size: 13px;
+            border-radius: 5px;
+            text-indent: 10px;
+            color: #cebdbdfd;
+        }
+        
+        .app-search input:focus {
+            border: 1px solid #cebdbdfd;
+        }
+        
+        .app-search img {
+            width: 28px;
+            position: relative;
+            top: -46px;
+            left: 490px;
+        }
+        
+        footer {
+            float: left;
+            width: 100%;
+            height: 60px;
+            background-color: #f1f3f4;
+        }
+        
+        .music-list {
+            float: left;
+            height: 680px;
+            width: 280px;
+            position: relative;
+            left: -191px;
+            border-right: 1px solid #e0e0e0;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        .music-list ul {
+            list-style: none;
+            margin-top: 0px;
+        }
+        
+        .music-list ul li a {
+            text-decoration: none;
+            color: black;
+            display: block;
+            line-height: 46px;
+            width: 278px;
+            margin-left: -40px;
+            text-indent: 20px;
+            font-size: 12px;
+        }
+        
+        .music-list ul li a:hover {
+            background-color: #a8a4a433;
+        }
+        
+        .music-run-image {
+            width: 20px;
+            position: relative;
+            left: -10px;
+            top: -1px;
+        }
+        
+        .music-name {
+            display: inline-block;
+            width: 120px;
+            height: 35px;
+            overflow: hidden;
+            margin-left: -20px;
+        }
+        
+        .music-mv-image {
+            width: 20px;
+            position: relative;
+            left: 100px;
+            top: 0px;
+        }
+        
+        .comment-list {
+            float: right;
+            height: 680px;
+            width: 300px;
+            border-left: 1px solid #e0e0e0;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+        
+        .comment-list ul li {
+            width: 280px;
+            padding-left: 10px;
+            list-style: none;
+            font-size: 13px;
+            position: relative;
+            left: -40px;
+        }
+        
+        .comment-title {
+            display: block;
+            line-height: 40px;
+            text-indent: 10px;
+            margin-top: 5px;
+            font-weight: 800;
+        }
+        
+        .user-header {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+        
+        .username {
+            position: relative;
+            top: -15px;
+            left: 10px;
+            font-size: 12px;
+        }
+        
+        /*.singer-name {*/
+        /*    position: relative;*/
+        /*    font-size: 10px;*/
+        /*}*/
+        
+        .music-main {
+            height: 680px;
+            width: 700px;
+            position: absolute;
+            left: 300px;
+        }
+        
+        .music-cover {
+            width: 250px;
+            position: relative;
+            left: 180px;
+            top: 80px;
+            border-radius: 50%;
+            border: 50px solid #2a2b2dd2;
+        }
+        
+        .music-detail {
+            display: block;
+            color: #2a2b2dab;
+            position: relative;
+            text-align: center;
+            top: 120px;
+        }
+        
+        .fadenum {
+            animation: fadenum 60s infinite linear;
+        }
+        
+        @keyframes fadenum {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+         ::-webkit-scrollbar {
+            width: 1px;
+            height: 16px;
+            background-color: #F5F5F5;
+        }
+        
+         ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(126, 123, 123, 0.103);
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(139, 136, 136, 0.3);
+            background-color: rgba(199, 196, 196, 0.507);
+        }
+        
+        .music-player {
+            width: 1300px;
+        }
+        
+        .music-mv {
+            position: absolute;
+            z-index: 9999;
+            width: 1920px;
+            height: 937px;
+            background-color: #2a2b2da6;
+            top: -50px;
+            left: -310px;
+        }
+        
+        .music-mv video {
+            position: relative;
+            width: 900px;
+            height: 500px;
+            left: 500px;
+            top: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <span class="app-title">
+                <!-- <img src="images/1675859603672.png"> -->
+            </span>
+            <span class="app-search">
+                <input type="text" placeholder="search..." v-model="keywords" @keyup.enter="getMusicMesage" />
+                <a href="javascript:void(0);" @click="getMusicMesage">
+                    <!-- <img src="/images/search-icon.png"> -->
+                </a>
+            </span>
+        </header>
+
+        <main>
+            <div class="music-list">
+                <ul>
+                    <li v-for="(item,index) in musicList">
+                        <a href="#">
+                            <!-- <img src="images/run.png" class="music-run-image" @click="runMusic(item.id)"> -->
+                            <img class="music-run-image" @click="runMusic(item.id)">
+                            <span class="music-name" @click="runMusic(item.id)">
+                                {{ item.name }}
+                            </span>
+                            <!-- <span v-text="singerName" class="singer-name"></span> -->
+                            <!-- <img v-if="item.mvid!=0" @click="playMv(item.mvid)" src="images/24gf-playSquare.png" class="music-mv-image"> -->
+                            <img v-if="item.mvid!=0" @click="playMv(item.mvid)" class="music-mv-image"><i v-if="item.mvid!=0" @click="playMv(item.mvid)">🎬</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="music-main">
+                <img :src="picUrl" v-show="picUrl!=''" class="music-cover" :class="{fadenum:isPlay}">
+                <sapn v-text="musicDetail" class="music-detail"></sapn>
+            </div>
+            <div class="comment-list">
+                <span class="comment-title">hot comments</span>
+                <ul>
+                    <li v-for="item in hotCommentList">
+                        <img class="user-header" :src="item.user.avatarUrl">
+                        <span class="username">{{ item.user.nickname }}</span>
+                        <p>{{ item.content }}</p>
+                    </li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <audio :src="musicUrl" class="music-player" @play="play" @pause="pause" controls autoplay loop></audio>
+        </footer>
+        <div class="music-mv" v-show="isShow" @click="closeMusicMv">
+            <video :src="mvUrl" controls autoplay loop></video>
+        </div>
+    </div>
+    <script>
+        let app = new Vue({
+            el: "#app",
+            data: {
+                keywords: "aurora",
+                musicList: [],
+                musicUrl: "",
+                picUrl: "",
+                musicDetail: "",
+                hotCommentList: [],
+                isPlay: false,
+                isShow: false,
+                mvUrl: ""
+            },
+            methods: {
+                getMusicMesage() {
+                    let that = this;
+                    axios.get("https://autumnfish.cn/search?keywords=" + this.keywords).then(
+                        function(response) {
+                            that.musicList = response.data.result.songs;
+                            let firstId = response.data.result.songs[0].id;
+                        },
+                        function(error) {
+                            console.log(error);
+                            alert("服务器错误!");
+                        }
+                    )
+                },
+                runMusic(id) {
+                    let that = this;
+                    axios.get("https://autumnfish.cn/song/url?id=" + id).then(
+                        function(response) {
+                            that.musicUrl = response.data.data[0].url;
+                            that.getCover(id);
+                            that.getComment(id);
+                        },
+                        function(err) {
+                            alert("服务器错误！");
+                        }
+                    )
+                },
+                getCover(id) {
+                    let that = this;
+                    axios.get("https://autumnfish.cn/song/detail?ids=" + id).then(
+                        function(response) {
+                            that.picUrl = response.data.songs[0].al.picUrl;
+                            that.musicDetail = response.data.songs[0].name + "   ——   " +
+                                response.data.songs[0].ar[0].name;
+                            that.singerName = response.data.songs[0].ar[0].name;
+                        },
+                        function(err) {
+                            alert("服务器错误！");
+                        }
+                    )
+                },
+                getComment(id) {
+                    let that = this;
+                    axios.get("https://autumnfish.cn/comment/hot?type=0&id=" + id).then(
+                        function(response) {
+                            that.hotCommentList = response.data.hotComments;
+                        },
+                        function(error) {
+                            alert("服务器错误");
+                        }
+                    )
+                },
+                play() {
+                    this.isPlay = true;
+                },
+                pause() {
+                    this.isPlay = false;
+                },
+                playMv(id) {
+                    this.musicUrl = "";
+                    this.pause();
+                    let that = this;
+                    axios.get("https://autumnfish.cn/mv/url?id=" + id).then(
+                        function(response) {
+                            that.mvUrl = response.data.data.url;
+                            that.isShow = true;
+                        },
+                        function(error) {
+                            alert("服务器错误");
+                        }
+                    )
+                },
+                closeMusicMv() {
+                    this.isShow = false;
+                    this.mvUrl = "";
+                }
+            }
+        })
+        app.getMusicMesage();
+    </script>
+</body>
+
+</html>

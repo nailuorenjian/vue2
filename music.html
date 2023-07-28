@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue-music</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" type="text/css" href="music.css">
+<body>
+    <div class="wrap" id="app">
+        <div id="player">
+        <!--header-->
+            <div class="search_bar">
+                <input type="text" class="fa-search" autocomplete="off" v-model="query" @keyup.enter="searchMusic">
+                <a href="javascript:void(0);" @click="searchMusic">
+                </a>
+            </div>
+            <!--search list-->
+            <div class="musicList">
+                <div class="song_wrapper" style="float:left;">
+                    <ul class="song_list">
+                        <li v-for="item in musicList">
+                            <a class="nameFont"  href="javascript:;">
+                                <b @click="playMusic(item.id)">{{ item.name }}</b>
+                                <span v-if="item.mvid!=0" @click="playMV(item.mvid)"><i>🎬</i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+        </div>
+        <div class="pic">
+            <div class="mvPic" style="display: flex;justify-content: center;align-items: center;height: 100%;">
+                <img :src="musicCover" clss="mvPics" :class="{fadenum:isPlay}" style="border-radius: 50%;width: 300px;height: 300px;border: 50px solid #2a2b2dd2;" alt="">
+            </div>
+            <sapn v-text="musicDetail" class="music-detail"></sapn>
+        </div>
+        <!-- comment -->
+        <div class="commentList">
+            <span class="comment-title">hot comments</span>
+            <div>
+                <ul v-for="item in hotComments">
+                    <dt><img :src="item.user.avatarUrl" class="userPic" alt="">
+                        <span class="username">{{ item.user.nickname }}</span>
+                    </dt>
+                    <p class="userComments">{{ item.content }}</p>
+                </ul>
+            </div>
+        </div>
+            <!--music play-->
+            <div class="play">
+                <audio ref="audio" @play="play" @pause="pause" :src="musicUrl" controls autoplay loop>
+                    <a href="">play</a>
+                </audio>
+            </div>
+            <!-- mv -->
+            <div class="mv" @click="hiden" v-show="isShow" style="display: none;">
+                <video :src="mvUrl" controls autoplay loop></video>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="music.js "></script>
+</html>

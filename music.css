@@ -1,0 +1,141 @@
+body {
+    background-image: linear-gradient(to right, lightgoldenrodyellow, palevioletred);
+}
+.wrap{
+    width: 80%;
+    margin: 30px auto;
+}
+.search_bar {
+    display: block;
+    float: left;
+    width: 100%;
+    height: 60px;
+    justify-content: center;align-items: center;
+    background-color: #ec4141a6;
+}
+.nameFont{
+    color:black;
+    font-size: 12px;
+    text-decoration:none;
+    width: 120px;
+    height: 35px;
+    overflow: hidden;
+    margin-left: 10px;
+}
+.fa-search {
+    float: right;
+    outline: none;
+    background-color: #ec4141a6;
+    border: 1px solid #cebdbd7a;
+    width: 280px;
+    line-height: 30px;
+    margin: 15px 50px;
+    font-size: 13px;
+    border-radius: 5px;
+    text-indent: 10px;
+    color: #cebdbdfd;
+}
+
+.musicList{
+    float: left;
+    background-color: pink;
+    margin-left: 0%;
+    width: 20%;
+    height: 700px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.comment-title{
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+}
+.commentList{
+    float: right;
+    background-color: pink;
+    margin-right: 0%;
+    width: 20%;
+    height: 700px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.play{
+    display: flex;
+    bottom: 0;
+    width: 100%;
+    height: 20%;
+    background-color:#f1f3f4;
+}
+
+.userPic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+.username {
+    position: relative;
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+}
+.userComments {
+    position: relative;
+    top: -10px;
+    /*left: 5px;*/
+    right: 10px;
+    font-size: 12px;
+}
+.pic{
+    float: left;
+    background-color: white;
+    width: 60%;
+    height: 100%;
+    height: 700px;
+}
+.mvPic {
+    text-align: center;
+}
+.mv {
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    background-color: #2a2b2da6;
+    top: 0px;
+    left: 0px;
+}
+
+.mv video {
+    position: relative;
+    width: 700px;
+    height: 400px;
+    left: 30%;
+    top: 150px;
+}
+
+.music-detail{
+    display: block;
+    color: #2a2b2dab;
+    text-align: center;
+    top: 200px;
+}
+/*旋转动画*/
+.fadenum {
+    -webkit-animation: animal 10s infinite linear ;
+    -webkit-transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
+}
+@-webkit-keyframes animal {
+    0%{
+        transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+    }
+}
